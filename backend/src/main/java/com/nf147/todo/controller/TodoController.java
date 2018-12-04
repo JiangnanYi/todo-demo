@@ -11,6 +11,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/todo")
+@CrossOrigin
 public class TodoController {
 
     @Autowired
@@ -18,7 +19,8 @@ public class TodoController {
 
     @RequestMapping(method = RequestMethod.GET)
     public List<Todo> home () {
-        return todoMapper.getTodos();
+            return todoMapper.getTodos();
+
     }
 
     @RequestMapping(method = RequestMethod.POST)

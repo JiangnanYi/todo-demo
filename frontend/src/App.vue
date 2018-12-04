@@ -2,15 +2,10 @@
 	<div id="app">
 		<h1>任务列表</h1>
 		<div>
-			<input v-model="todo.name" placeholder="name"></input>
-			<input v-model="todo.detail" placeholder="detail"></input>
-			<input v-model="todo.createdAt" type="date" placeholder="createdAt"></input>
-			<input v-model="todo.finishedAt" type="date" placeholder="finishedAt"></input>
-			<input v-model="todo.state" placeholder="state" />
-			<input v-model="todo.memo" placeholder="memo" />
-			<button @click="submit">提交</button>
+		<button><router-link to="/insert" >添加</router-link></button>
+			<router-view></router-view>
 		</div>
-
+<br>
 		<table>
 			<tr>
 				<td>编号</td>
@@ -30,11 +25,13 @@
 				<td>{{todo.finishedAt}}</td>
 				<td>{{todo.state}}</td>
 				<td>{{todo.memo}}</td>
-				<td><button @click="del" :data-id="todo.id">删除</button></td>
+				<td><button @click="del" :data-id="todo.id">删除</button><button><router-link to="/upt" >修改</router-link></button></td>
 			</tr>
 		</table>
 	</div>
 </template>
+
+
 
 <script>
 	export default {
@@ -49,8 +46,7 @@
 					finishedAt: '',
 					state: '',
 					memo: ''
-				},
-				id: '{{todo.memo}}'
+				}
 			}
 		},
 		methods: {
@@ -64,30 +60,24 @@
 						body: JSON.stringify(this.todo)
 					}).then(resp => resp.json(), location.reload())
 					.then(data => {
-						this.todos = data
-						
+						this.todos = data;
+
 					});
 			},
 			del(e) {
 				var id = e.currentTarget.dataset.id;
+				fetch('http://localhost:8080/todo/del/' + id, {
+						method: 'get',
+					})
+					.then(resp => resp.json(), location.reload())
+					.then(data => {
+						this.todos = data;
 
-// 				fetch("http://localhost:8080/todo/del/" + id + "", {
-// 					method: "get"
-// 				}).then(function(resp) {
-// 					resp.json().then((data) => {
-// 						console.log(data);
-// 					})
-// 				});
-
-
-									 fetch('http://localhost:8080/todo/del/'+id,{
-										 method: 'get',
-									 })
-									 .then(resp => resp.json(), location.reload())
-				             .then(data => {
-				                 this.todos = data;
-												 
-				             });
+					});
+			},
+			upt(e) {
+				var id = e.currentTarget.dataset.id;
+				this.$router.push('/upt');
 			}
 		},
 		created() {

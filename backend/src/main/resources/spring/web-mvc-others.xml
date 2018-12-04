@@ -22,6 +22,8 @@
         <property name="defaultThemeName" value="girl"/> <!-- 默认主题文件的名字是 "可爱的小粉红"，如果不设置，名为 theme -->
     </bean>
 
+
+
     <!--配置全局跨域规则-->
     <mvc:cors>
         <mvc:mapping path="/**"
