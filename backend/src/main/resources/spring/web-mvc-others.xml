@@ -14,6 +14,23 @@
                   value="zh"/> <!--当通过 Accept-Language 自动确定 Locale 的方式已经满足不了你，那么你需要试试注册一个 LocaleResolver 来制定 Locale 策略-->
     </bean>
 
+
+    <bean class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">
+        <property name="objectMapper">
+            <bean class="org.springframework.http.converter.json.Jackson2ObjectMapperFactoryBean">
+                <property name="failOnEmptyBeans" value="false"/>
+                <property name="dateFormat">
+                    <bean class="java.text.SimpleDateFormat">
+                        <constructor-arg value="yyyy年MM月dd日"/>
+                    </bean>
+                </property>
+            </bean>
+        </property>
+        <property name="prettyPrint" value="true"/>
+        <property name="jsonPrefix" value="data"/>
+    </bean>
+
+
     <!--主题切换-->
     <bean id="themeSource" class="org.springframework.ui.context.support.ResourceBundleThemeSource">
         <property name="basenamePrefix" value="themes."/> <!-- 哪个文件夹里 -->
@@ -21,6 +38,8 @@
     <bean id="themeResolver" class="org.springframework.web.servlet.theme.SessionThemeResolver">
         <property name="defaultThemeName" value="girl"/> <!-- 默认主题文件的名字是 "可爱的小粉红"，如果不设置，名为 theme -->
     </bean>
+
+
 
 
 
